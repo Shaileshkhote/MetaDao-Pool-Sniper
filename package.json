@@ -1,0 +1,41 @@
+{
+    "name": "metadao-geyser-damm",
+    "version": "1.0.0",
+    "description": "Solana Geyser implementation to stream MetaDAO transactions and create DAMM v2 positions",
+    "main": "dist/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "start": "npm run build && node dist/index.js",
+        "dev": "tsx watch src/index.ts",
+        "stream": "tsx src/services/streamTransactions.ts",
+        "automate": "tsx src/index.ts automate",
+        "automate:check": "tsx src/index.ts automate --check",
+        "automate:simulate": "tsx src/index.ts automate --simulate",
+        "type-check": "tsc --noEmit"
+    },
+    "keywords": [
+        "solana",
+        "geyser",
+        "metadao",
+        "damm",
+        "blockchain"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@solana/web3.js": "^1.87.6",
+        "@solana/spl-token": "^0.3.9",
+        "@coral-xyz/anchor": "^0.29.0",
+        "dotenv": "^16.3.1",
+        "bn.js": "^5.2.1",
+        "bs58": "^5.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.4",
+        "@types/bn.js": "^5.1.5",
+        "@types/bs58": "^4.0.4",
+        "typescript": "^5.3.3",
+        "tsx": "^4.7.0"
+    }
+}
