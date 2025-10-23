@@ -63,7 +63,7 @@ async function main(): Promise<void> {
 }
 
 process.on('unhandledRejection', (error: Error) => {
-    console.error('\n❌ Unhandled rejection:', error);
+    console.error('\n❌ Unhandled rejection:', error.message);
     process.exit(1);
 });
 

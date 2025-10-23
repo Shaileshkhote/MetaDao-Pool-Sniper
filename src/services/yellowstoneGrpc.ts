@@ -87,8 +87,8 @@ export class YellowstoneUnifiedStream {
                 this.txCallbacks.forEach(callback => {
                     try {
                         callback({ signature, slot, accounts, logs, err });
-                    } catch (error) {
-                        console.error('TX callback error:', error);
+                    } catch (error: any) {
+                        console.error('TX callback error:', error.message);
                     }
                 });
             }
