@@ -8,24 +8,24 @@ export interface Config {
     rpcUrl: string;
     wsUrl: string;
 
-    // Geyser Configuration
-    geyserEndpoint?: string;
-    geyserAccessToken?: string;
+    // Geyser Configuration (for fast transaction streaming)
+    geyserRpcUrl?: string;
+    geyserXToken?: string;
 
     // Wallet
     walletPrivateKey?: string;
 
     // Program IDs
-    metaDAOProgramId: PublicKey;
-    launchpadProgramId: PublicKey;
+    launchpadProgramId: PublicKey;  // Main MetaDAO launchpad program
     dammV2ProgramId: PublicKey;
 
     // Transaction Filtering
     filterAccounts: string[];
 
-    // Loyal Pool Configuration
-    loyalLaunchPubkey?: string;
-    loyalAmount?: string;
+    // Pool Configuration
+    launchPubkey?: string;
+    tokenMint?: string; // Pre-configured token mint for instant fire mode
+    tokenAmount?: string;
     solAmount?: string;
     keypairPath?: string;
 
@@ -47,17 +47,14 @@ export const config: Config = {
     rpcUrl: process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
     wsUrl: process.env.SOLANA_WS_URL || 'wss://api.mainnet-beta.solana.com',
 
-    // Geyser Configuration
-    geyserEndpoint: process.env.GEYSER_ENDPOINT,
-    geyserAccessToken: process.env.GEYSER_ACCESS_TOKEN,
+    // Geyser Configuration (for fast transaction streaming)
+    geyserRpcUrl: process.env.GEYSER_RPC_URL,
+    geyserXToken: process.env.GEYSER_X_TOKEN,
 
     // Wallet
     walletPrivateKey: process.env.WALLET_PRIVATE_KEY,
 
     // Program IDs
-    metaDAOProgramId: new PublicKey(
-        process.env.METADAO_PROGRAM_ID || 'meta3cxKzFBmWYgCVozmvCQAS3y9b3fGxrG9HkHL7Wi'
-    ),
     launchpadProgramId: new PublicKey(
         process.env.LAUNCHPAD_PROGRAM_ID || 'LPDkxWZBJy9ixu2P3p5P7TZrDfSfYCcqMxYqNwbMNWS'
     ),
@@ -68,9 +65,10 @@ export const config: Config = {
     // Transaction Filtering
     filterAccounts: process.env.FILTER_ACCOUNTS?.split(',').filter(Boolean) || [],
 
-    // Loyal Pool Configuration
-    loyalLaunchPubkey: process.env.LOYAL_LAUNCH_PUBKEY,
-    loyalAmount: process.env.LOYAL_AMOUNT,
+    // Pool Configuration
+    launchPubkey: process.env.LAUNCH_PUBKEY,
+    tokenMint: process.env.TOKEN_MINT, // Pre-configured for instant fire mode
+    tokenAmount: process.env.TOKEN_AMOUNT,
     solAmount: process.env.SOL_AMOUNT,
     keypairPath: process.env.KEYPAIR_PATH || process.env.WALLET_KEYPAIR_PATH,
 
@@ -85,8 +83,8 @@ export const config: Config = {
         process.env.DAMM_POOL_AUTHORITY || 'HLnpSz9h2S4hiLQ43rnSD9XkcUThA7B8hQMKmDaiTLcC'
     ),
 
-    // Compute Budget
-    computeUnitPrice: parseInt(process.env.COMPUTE_UNIT_PRICE || '200000'),
+    // Compute Budget (HIGH priority for same-slot execution)
+    computeUnitPrice: parseInt(process.env.COMPUTE_UNIT_PRICE || '2000000'), // 2M micro-lamports = 0.002 SOL priority fee
 };
 
 export function validateConfig(): boolean {

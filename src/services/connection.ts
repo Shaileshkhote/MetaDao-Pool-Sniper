@@ -7,8 +7,7 @@ import { config } from '../config/config.js';
  */
 export function getConnection(): Connection {
     return new Connection(config.rpcUrl, {
-        commitment: 'confirmed',
-        wsEndpoint: config.wsUrl,
+        commitment: 'processed',
     });
 }
 
@@ -35,4 +34,5 @@ export async function getWalletBalance(connection: Connection, wallet: Keypair):
     const balance = await connection.getBalance(wallet.publicKey);
     return balance / 1e9; // Convert lamports to SOL
 }
+
 
